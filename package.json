@@ -1,0 +1,22 @@
+{
+  "name": "nymphea",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuillaumeMMM/nymphea.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GuillaumeMMM/nymphea/issues"
+  },
+  "homepage": "https://github.com/GuillaumeMMM/nymphea#readme",
+  "devDependencies": {
+    "jsdom": "^19.0.0"
+  }
+}
