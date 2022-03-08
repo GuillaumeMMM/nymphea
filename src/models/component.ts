@@ -4,3 +4,8 @@ export class Component {
     template: string = '';
     styles?: string;
 }
+
+export class ComponentNode {
+    componentId: string = '';
+    children: ComponentNode[] = [];
+}
