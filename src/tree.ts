@@ -25,7 +25,6 @@ function getNodeChildren(componentId: string, componentsDocuments: {comp: Compon
     (componentsDocuments || []).forEach(compDoc => {
         const matchingTagElement = nodeDoc.getElementsByTagName(compDoc.comp.tag);
         if (matchingTagElement && matchingTagElement.length > 0) {
-            console.log(matchingTagElement, compDoc.comp.tag)
             const newParentsIds: string[] = parentsIds.concat(componentId);
             if (circularDependency(compDoc.comp.id, parentsIds)) {
                 throw new TypeError(`Circular dependency found (${compDoc.comp.id})`);

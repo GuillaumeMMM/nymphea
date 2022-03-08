@@ -23,7 +23,7 @@ function generateHTMLForComponents(components: Component[], rootComponentId: str
 
     insertChildren(componentsTree, dom.window.document, components);
 
-    return dom.window.document.getElementById('root').outerHTML;
+    return dom.window.document.getElementById('root').innerHTML;
 }
 
 function insertRootComponent(document: Document, rootComponent: Component): void {

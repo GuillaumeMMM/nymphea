@@ -9,10 +9,6 @@ function registerComponent(component: Component): void {
     components.push(cleanComponent(component));
 }
 
-function getComponents(): Component[] {
-    return components;
-}
-
 function getComponent(componentId: string): Component | undefined {
     return components.find(component => component.id === componentId);
 }
