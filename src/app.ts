@@ -12,7 +12,7 @@ generateHTMLForComponents([{id: '123', tag: 'nym-container', template: '<span>NY
 function generateHTMLForComponents(components: Component[], rootComponentId: string) {
     (components || []).forEach(component => componentModule.registerComponent(component));
     
-    const rootComponent: Component = componentModule.getComponent(rootComponentId);
+    const rootComponent: Component = componentModule.getComponent(componentModule.cleanComponentId(rootComponentId));
 
     if (!rootComponent) {
         throw new TypeError(`Root component ${rootComponentId} not found`);
@@ -30,6 +30,6 @@ function insertRootComponent(document: Document, rootComponent: Component): void
 
     //  Insert container in root
     document.querySelector('#root')?.appendChild(rootComponentElm);
-    
+
     console.log(dom.window.document.querySelector(`#root`).outerHTML)
 }

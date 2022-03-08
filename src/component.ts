@@ -21,17 +21,19 @@ function isValidComponent(component: Component): boolean {
     return !!(component?.id && component.template && typeof component.template === 'string');
 }
 
+function cleanComponentId(componentId: string): string {
+    return componentId.replace(/^[A-Za-z][A-Za-z0-9_:\.-]*/gi, "");
+}
+
 function cleanComponent(component: Component): Component {
-    let componentId = component.id;
-    componentId = componentId.replace(/^[A-Za-z][A-Za-z0-9_:\.-]*/gi, "");
-    console.log('clean', component.id, componentId)
     return {
         ...component,
-        id: componentId
+        id: cleanComponentId(component.id)
     }
 }
 
 module.exports = {
     registerComponent: registerComponent,
-    getComponent: getComponent
+    getComponent: getComponent,
+    cleanComponentId: cleanComponentId
 }
