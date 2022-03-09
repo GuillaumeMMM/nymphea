@@ -1,6 +1,6 @@
 {
   "name": "nymphea",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,18 @@
     "type": "git",
     "url": "git+https://github.com/GuillaumeMMM/nymphea.git"
   },
-  "author": "",
+  "author": "Guillaume Meigniez",
+  "keywords": [
+    "html",
+    "build",
+    "generate",
+    "create",
+    "html-creator",
+    "node",
+    "node.js",
+    "component-based", 
+    "html-generator"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/GuillaumeMMM/nymphea/issues"

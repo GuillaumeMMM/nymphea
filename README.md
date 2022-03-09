@@ -10,7 +10,7 @@ npm install nymphea
 
 ## Usage
 ```javascript
-import { registerComponents, generateHTMLForRoot } from 'nymphea';
+import { registerComponents, generateHTMLForRoot, generateCSS } from 'nymphea';
 
 const components = [
     {
