@@ -26,7 +26,7 @@ function getNodeChildren(componentId: string, componentsDocuments: {comp: Compon
         const matchingTagElement = nodeDoc.getElementsByTagName(compDoc.comp.tag);
         if (matchingTagElement && matchingTagElement.length > 0) {
             const newParentsIds: string[] = parentsIds.concat(componentId);
-            if (circularDependency(compDoc.comp.id, parentsIds)) {
+            if (hasCircularDependency(compDoc.comp.id, parentsIds)) {
                 throw new TypeError(`Circular dependency found (${compDoc.comp.id})`);
             }
             children.push({componentId: compDoc.comp.id, children: getNodeChildren(compDoc.comp.id, componentsDocuments, newParentsIds)});
@@ -35,7 +35,7 @@ function getNodeChildren(componentId: string, componentsDocuments: {comp: Compon
     return children;
 }
 
-function circularDependency(componentId: string, parentsIds: string[]): boolean {
+function hasCircularDependency(componentId: string, parentsIds: string[]): boolean {
     return parentsIds.includes(componentId);
 }
 
