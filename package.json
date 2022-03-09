@@ -1,7 +1,7 @@
 {
   "name": "nymphea",
-  "version": "1.0.0",
-  "description": "Nymphéas exposes HTML and CSS generator function that returns a sigle HTML string and a single CSS string for a collection of nested components. It uses nodeJS and jsdom for HTML transformations.",
+  "version": "0.0.1",
+  "description": "Nymphéas 💅 exposes HTML and CSS generator function that returns a sigle HTML string and a single CSS string for a collection of nested components. It uses nodeJS and jsdom for HTML transformations.",
   "main": "src/app.ts",
   "scripts": {
     "start": "ts-node ./src/app.ts",
@@ -12,7 +12,18 @@
     "type": "git",
     "url": "git+https://github.com/GuillaumeMMM/nymphea.git"
   },
-  "author": "GuillaumeMMM",
+  "author": "Guillaume Meigniez",
+  "keywords": [
+    "html",
+    "build",
+    "generate",
+    "create",
+    "html-creator",
+    "node",
+    "node.js",
+    "component-based", 
+    "html-generator"
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/GuillaumeMMM/nymphea/issues"
