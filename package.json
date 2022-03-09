@@ -24,5 +24,9 @@
     "nodemon": "^2.0.15",
     "ts-node": "^10.6.0",
     "typescript": "^4.6.2"
+  },
+  "dependencies": {
+    "postcss": "^8.4.8",
+    "postcss-prefix-selector": "^1.14.0"
   }
 }

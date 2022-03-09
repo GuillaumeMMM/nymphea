@@ -2,18 +2,17 @@ import { Component, ComponentNode } from "./models/component";
 
 const componentModule = require('./component.ts');
 const treeModule = require('./tree.ts');
+
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
+const prefixer = require('postcss-prefix-selector');
+const postcss = require('postcss');
 
-console.log(generateHTMLForComponents([
-    {id: 'id-1', tag: 'tag-1', template: 'TAG 1 <tag-2></tag-2>'},
-    {id: 'id-2', tag: 'tag-2', template: 'TAG 2 <tag-3></tag-3>'},
-    {id: 'id-3', tag: 'tag-3', template: 'TAG 3'},
-], 'id-1'));
-
-function generateHTMLForComponents(components: Component[], rootComponentId: string): string {
-
+function registerComponents(components: Component[]): void {
     componentModule.registerComponents(components);
+}
+
+function generateHTMLForRoot(rootComponentId: string): string {
 
     //  Define global DOM
     const dom = new JSDOM(`<html lang="en"><body><div id="root"></div></body></html>`);
@@ -24,9 +23,25 @@ function generateHTMLForComponents(components: Component[], rootComponentId: str
         throw new TypeError(`Root component ${rootComponentId} not found`);
     }
 
-    let rootElement: HTMLElement = dom.window.document.querySelector('#root');
+    const rootElement: HTMLElement = dom.window.document.querySelector('#root');
 
     return buildRootNode(dom.window.document, rootElement, rootComponent, componentModule.getComponents()).innerHTML;
+}
+
+function generateCSS(): string {
+
+    let css: string = '';
+
+    (componentModule.getComponents() as Component[]).filter(comp => comp.styles).forEach(comp => {
+
+        const out = postcss().use(prefixer({
+            prefix: `.nym-component-${comp.id}`,
+            exclude: ['.c'],
+        })).process(comp.styles).css
+
+        css += ` ${out}`;
+    });
+    return css;
 }
 
 function buildRootNode(document: Document, rootElement: HTMLElement, rootComponent: Component, components: Component[]): HTMLElement {
@@ -49,7 +64,7 @@ function insertRootComponent(document: Document, rootElement: HTMLElement, rootC
 
     //  Create component container
     const rootComponentElm: HTMLElement = document.createElement('div');
-    rootComponentElm.setAttribute('id', `nym-component-${rootComponent.id}`);
+    rootComponentElm.classList.add(`nym-component-${rootComponent.id}`);
     rootComponentElm.innerHTML = rootComponent.template;
 
     //  Insert container in root
@@ -66,7 +81,7 @@ function insertChildren(document: Document, rootElement: HTMLElement, node: Comp
     if (matchingComp) {
         //  Create component container
         const componentElm: HTMLElement = document.createElement('div');
-        componentElm.setAttribute('id', `nym-component-${node.componentId}`);
+        componentElm.classList.add(`nym-component-${node.componentId}`);
         componentElm.innerHTML = matchingComp.template || '';
 
         //  Insert container in root for each matching Elm
@@ -89,5 +104,7 @@ function insertChildren(document: Document, rootElement: HTMLElement, node: Comp
 }
 
 module.exports = {
-    generateHTML: generateHTMLForComponents
+    registerComponents: registerComponents,
+    generateHTMLForRoot: generateHTMLForRoot,
+    generateCSS: generateCSS
 }
