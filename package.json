@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node ./src/app.ts",
     "watch": "nodemon --watch ./src -e ts,js,html,css -x \"npm start\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build" : "tsc"
   },
   "repository": {
     "type": "git",
@@ -39,5 +40,6 @@
     "jsdom": "^19.0.0",
     "postcss": "^8.4.8",
     "postcss-prefix-selector": "^1.14.0"
-  }
+  },
+  "files": ["lib/**/*"]
 }
