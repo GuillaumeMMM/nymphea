@@ -12,15 +12,15 @@ function registerComponents(components: Component[]): void {
     componentModule.registerComponents(components);
 }
 
-function generateHTMLForRoot(rootComponentId: string): string {
+function generateHTMLForRoot(rootComponentTag: string): string {
 
     //  Define global DOM
     const dom = new JSDOM(`<html lang="en"><body><div id="root"></div></body></html>`);
     
-    const rootComponent: Component = componentModule.getComponent(rootComponentId);
+    const rootComponent: Component = componentModule.getComponentFromTag(rootComponentTag);
 
     if (!rootComponent) {
-        throw new TypeError(`Root component ${rootComponentId} not found`);
+        throw new TypeError(`Root component ${rootComponentTag} not found`);
     }
 
     const rootElement: HTMLElement = dom.window.document.querySelector('#root');

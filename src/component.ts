@@ -20,8 +20,8 @@ function getComponents(): Component[] {
     return components;
 }
 
-function getComponent(componentId: string): Component | undefined {
-    return components.find(component => component.id === componentId);
+function getComponentFromTag(componentTag: string): Component | undefined {
+    return components.find(component => component.tag === componentTag);
 }
 
 function isValidComponent(component: Component): boolean {
@@ -44,6 +44,6 @@ function cleanComponent(component: Component): Component {
 
 module.exports = {
     registerComponents: registerComponents,
-    getComponent: getComponent,
+    getComponentFromTag: getComponentFromTag,
     getComponents: getComponents
 }
