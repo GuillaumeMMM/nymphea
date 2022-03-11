@@ -1,7 +1,7 @@
 import { Component, ComponentNode } from "./models/component";
 
-const componentModule = require('./component.ts');
-const treeModule = require('./tree.ts');
+const componentModule = require('./component');
+const treeModule = require('./tree');
 
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
