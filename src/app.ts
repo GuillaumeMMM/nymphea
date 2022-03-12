@@ -8,16 +8,14 @@ const { JSDOM } = jsdom;
 const prefixer = require('postcss-prefix-selector');
 const postcss = require('postcss');
 
-function registerComponents(components: Component[]): void {
-    componentModule.registerComponents(components);
-}
+function generateHTML(components: Component[], rootComponentTag: string): string {
 
-function generateHTMLForRoot(rootComponentTag: string): string {
+    const cleanedCompoents: Component[] = componentModule.cleanComponents(components);
 
     //  Define global DOM
     const dom = new JSDOM(`<html lang="en"><body><div id="root"></div></body></html>`);
     
-    const rootComponent: Component = componentModule.getComponentFromTag(rootComponentTag);
+    const rootComponent: Component = componentModule.getComponentFromTag(cleanedCompoents, rootComponentTag);
 
     if (!rootComponent) {
         throw new TypeError(`Root component ${rootComponentTag} not found`);
@@ -25,14 +23,16 @@ function generateHTMLForRoot(rootComponentTag: string): string {
 
     const rootElement: HTMLElement = dom.window.document.querySelector('#root');
 
-    return buildRootNode(dom.window.document, rootElement, rootComponent, componentModule.getComponents()).innerHTML;
+    return buildRootNode(dom.window.document, rootElement, rootComponent, cleanedCompoents).innerHTML;
 }
 
-function generateCSS(): string {
+function generateCSS(components: Component[]): string {
+
+    const cleanedCompoents: Component[] = componentModule.cleanComponents(components);
 
     let css: string = '';
 
-    (componentModule.getComponents() as Component[]).filter(comp => comp.styles).forEach(comp => {
+    cleanedCompoents.filter(comp => comp.styles).forEach(comp => {
 
         const out = postcss().use(prefixer({
             prefix: `.nym-component-${comp.id}`,
@@ -44,14 +44,22 @@ function generateCSS(): string {
     return css;
 }
 
+function getComponentsTree(components: Component[], rootComponentTag: string): ComponentNode {
+    const cleanedCompoents: Component[] = componentModule.cleanComponents(components);
+
+    const rootComponent: Component = componentModule.getComponentFromTag(cleanedCompoents, rootComponentTag);
+
+    const componentsRootNode: ComponentNode = {componentId: rootComponent.id, children: []};
+
+    return treeModule.buildComponentTree(componentsRootNode, cleanedCompoents);
+}
+
 function buildRootNode(document: Document, rootElement: HTMLElement, rootComponent: Component, components: Component[]): HTMLElement {
     //  Insert the root component in the DOM root
     rootElement = insertRootComponent(document, rootElement, rootComponent).cloneNode(true) as HTMLElement;
 
-    const componentsRootNode: ComponentNode = {componentId: rootComponent.id, children: []};
-
     //  Build a tree of dependencies
-    const componentsTree: ComponentNode = treeModule.buildComponentTree(componentsRootNode, components);
+    const componentsTree: ComponentNode = getComponentsTree(components, rootComponent.tag);
 
     //  Insert all child nodes
     rootElement = insertChildren(document, rootElement, componentsTree, components);
@@ -104,7 +112,7 @@ function insertChildren(document: Document, rootElement: HTMLElement, node: Comp
 }
 
 module.exports = {
-    registerComponents: registerComponents,
-    generateHTMLForRoot: generateHTMLForRoot,
-    generateCSS: generateCSS
+    generateHTML: generateHTML,
+    generateCSS: generateCSS,
+    getComponentsTree: getComponentsTree
 }

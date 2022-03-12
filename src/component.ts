@@ -2,25 +2,14 @@ import { Component } from "./models/component";
 
 const components: Component[] = [];
 
-function registerComponents(componentsTmp: Component[]): void {
+function cleanComponents(componentsTmp: Component[]): Component[] {
     if (!componentsTmp || componentsTmp.length === 0) {
         throw new TypeError(`No component found`);
     }
-    (componentsTmp || []).forEach(component => registerComponent(component));
+    return (componentsTmp || []).filter(component => isValidComponent(component)).map(component => cleanComponent(component));
 }
 
-function registerComponent(component: Component): void {
-    if (!isValidComponent(component)) {
-        throw new TypeError(`Invalid component ${component?.id || ''}`);
-    }
-    components.push(cleanComponent(component));
-}
-
-function getComponents(): Component[] {
-    return components;
-}
-
-function getComponentFromTag(componentTag: string): Component | undefined {
+function getComponentFromTag(components: Component[], componentTag: string): Component | undefined {
     return components.find(component => component.tag === componentTag);
 }
 
@@ -43,7 +32,6 @@ function cleanComponent(component: Component): Component {
 }
 
 module.exports = {
-    registerComponents: registerComponents,
+    cleanComponents: cleanComponents,
     getComponentFromTag: getComponentFromTag,
-    getComponents: getComponents
 }
