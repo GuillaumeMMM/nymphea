@@ -1,6 +1,6 @@
 {
   "name": "nymphea",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Nymphéa 💅 exposes HTML and CSS generator function that returns a sigle HTML string and a single CSS string for a collection of nested components. It uses nodeJS and jsdom for HTML transformations.",
   "main": "lib/app.js",
   "scripts": {
