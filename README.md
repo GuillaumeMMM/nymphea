@@ -50,7 +50,7 @@ console.log(css);
 .nym-component-node-3 {color: 'orange';} */
 
 
-const tree = JSON.stringify(nymphea.getComponentsTree(components, 'my-parent'));
+const tree = nymphea.getComponentsTree(components, 'my-parent');
 //  Returns the tree of comonents rooted on the selected tag
 
 console.log(tree);
@@ -67,15 +67,15 @@ console.log(tree);
 
 ## Models
 ```javascript
-    class Component {
-        id: string;
-        tag: string;
-        template: string;
-        styles?: string;
-    }
+class Component {
+    id: string;
+    tag: string;
+    template: string;
+    styles?: string;
+}
 
-    class ComponentNode {
-        componentId: string;
-        children: ComponentNode[];
-    }
+class ComponentNode {
+    componentId: string;
+    children: ComponentNode[];
+}
 ```
