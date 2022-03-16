@@ -8,6 +8,7 @@ const { JSDOM } = jsdom;
 const prefixer = require('postcss-prefix-selector');
 const postcss = require('postcss');
 
+
 function generateHTML(components: Component[], rootComponentTag: string): string {
 
     const cleanedCompoents: Component[] = componentModule.cleanComponents(components);
@@ -73,7 +74,11 @@ function insertRootComponent(document: Document, rootElement: HTMLElement, rootC
     //  Create component container
     const rootComponentElm: HTMLElement = document.createElement('div');
     rootComponentElm.classList.add(`nym-component-${rootComponent.id}`);
-    rootComponentElm.innerHTML = rootComponent.template;
+    if (typeof rootComponent.template === 'string') {
+        rootComponentElm.innerHTML = rootComponent.template;
+    } else {
+        rootComponentElm.appendChild(rootComponent.template);
+    }
 
     //  Insert container in root
     newRootElement?.appendChild(rootComponentElm);
@@ -90,7 +95,12 @@ function insertChildren(document: Document, rootElement: HTMLElement, node: Comp
         //  Create component container
         const componentElm: HTMLElement = document.createElement('div');
         componentElm.classList.add(`nym-component-${node.componentId}`);
-        componentElm.innerHTML = matchingComp.template || '';
+
+        if (typeof matchingComp.template === 'string') {
+            componentElm.innerHTML = matchingComp.template || '';
+        } else {
+            componentElm.appendChild(matchingComp.template);
+        }
 
         //  Insert container in root for each matching Elm
         const matchingTags: NodeList = newRootElement.querySelectorAll(matchingComp.tag);

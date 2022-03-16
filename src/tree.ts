@@ -46,7 +46,12 @@ function getRootElementForComponent(component: Component): Document {
 
     const rootComponentElm: HTMLElement = document.createElement('div');
     rootComponentElm.setAttribute('id', `nym-component-${component.id}`);
-    rootComponentElm.innerHTML = component.template;
+
+    if (typeof component.template === 'string') {
+        rootComponentElm.innerHTML = component.template;
+    } else {
+        rootComponentElm.appendChild(component.template);
+    }
 
     document.querySelector('#root')?.appendChild(rootComponentElm);
 

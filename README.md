@@ -70,7 +70,7 @@ console.log(tree);
 class Component {
     id: string;
     tag: string;
-    template: string;
+    template: string | HTMLElement;
     styles?: string;
 }
 
@@ -79,3 +79,7 @@ class ComponentNode {
     children: ComponentNode[];
 }
 ```
+
+## To Do
+- [x] Let the component template be a HTMLElement
+- [ ] Create a nym-ignore html id attribute for parts of the temlates not to be interpreted as code

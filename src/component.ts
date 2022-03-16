@@ -14,7 +14,7 @@ function getComponentFromTag(components: Component[], componentTag: string): Com
 }
 
 function isValidComponent(component: Component): boolean {
-    return !!(component?.id && component.template && typeof component.template === 'string');
+    return !!(component?.id && component.template);
 }
 
 function isValidComponentId(componentId: string): boolean {
