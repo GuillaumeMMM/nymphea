@@ -82,4 +82,6 @@ class ComponentNode {
 
 ## To Do
 - [x] Let the component template be a HTMLElement
-- [ ] Create a nym-ignore html id attribute for parts of the temlates not to be interpreted as code
+- [ ] Let the component template be a HTML File
+- [ ] Let the component stykes be a CSS File
+- [ ] Create a nym-ignore html id attribute for parts of the temlates not to be interpreted as part of the framework
