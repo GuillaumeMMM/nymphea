@@ -82,6 +82,7 @@ class ComponentNode {
 
 ## To Do
 - [x] Let the component template be a HTMLElement
+- [ ] Add data & variables to templates
 - [ ] Let the component template be a HTML File
 - [ ] Let the component stykes be a CSS File
 - [ ] Create a nym-ignore html id attribute for parts of the temlates not to be interpreted as part of the framework
