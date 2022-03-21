@@ -2,18 +2,12 @@ import { Component, ComponentData, ComponentNode } from "./models/component";
 
 const componentModule = require('./component');
 const treeModule = require('./tree');
+const dataModule = require('./data');
 
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 const prefixer = require('postcss-prefix-selector');
 const postcss = require('postcss');
-
-const components: Component[] = [
-    {tag: 'root', id: 'root', template: '<span>{{variable}}</span>', data: {variable: 'Hello World'}}
-];
-
-console.log(generateHTML(components, 'root'));
-
 
 function generateHTML(components: Component[], rootComponentTag: string): string {
 
@@ -86,9 +80,7 @@ function insertRootComponent(document: Document, rootElement: HTMLElement, rootC
         rootComponentElm.appendChild(rootComponent.template);
     }
 
-    console.log(rootComponentElm.childNodes[0])
-
-    rootComponentElm = insertData(rootComponentElm, rootComponent);
+    rootComponentElm = dataModule.insertData(rootComponentElm, rootComponent);
 
     //  Insert container in root
     newRootElement?.appendChild(rootComponentElm);
@@ -129,31 +121,6 @@ function insertChildren(document: Document, rootElement: HTMLElement, node: Comp
         newRootElement = insertChildren(document, newRootElement, child, components).cloneNode(true) as HTMLElement;
     });
     return newRootElement;
-}
-
-function insertData(element: HTMLElement, component: Component): HTMLElement {
-    let newElement: HTMLElement = element.cloneNode(true) as HTMLElement;
-    if (newElement.childNodes.length > 0) {
-        newElement.childNodes.forEach((child, index) => {
-            newElement.replaceChild(insertDataChild(child as HTMLElement, component.data || {}), child);
-            child = insertData(newElement.childNodes[index].cloneNode(true) as HTMLElement, component);
-        });
-
-    }
-
-    return newElement;
-}
-
-function insertDataChild(childElement: HTMLElement, data: ComponentData): HTMLElement {
-    const newElement: HTMLElement = childElement.cloneNode(true) as HTMLElement;
-
-    if (newElement.nodeType === 3 && newElement.innerText) {
-        Object.keys(data).forEach(dataKey => {
-            newElement.innerText = newElement.innerText.replace(`{{${dataKey}}}`, data[dataKey]);
-        });
-    }
-
-    return newElement;
 }
 
 module.exports = {

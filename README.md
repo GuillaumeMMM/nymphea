@@ -14,7 +14,7 @@ npm install nymphea
 const nymphea = require('nymphea');
 
 const components = [
-    {tag: 'my-parent', id: 'node-1', template: `<div class="container">Hello World <my-child1></my-child1> <my-child2></my-child2></div>`, styles: ".container {color: 'red';}"},
+    {tag: 'my-parent', id: 'node-1', template: `<div class="container">{{var}} {{object.subVar}}<my-child1></my-child1> <my-child2></my-child2></div>`, styles: ".container {color: 'red';}"}, data: {var: 'Hello', object: {subVar: 'World'}},
     {tag: 'my-child1', id: 'node-2', template: '<span>Child 1</span>', styles: "span {color: 'blue';}"},
     {tag: 'my-child2', id: 'node-3', template: `<span>Child 2 <my-child3></my-child3></span>`, styles: "span {color: 'orange';}"},
     {tag: 'my-child3', id: 'node-4', template: '<span>Child 3</span>'},
@@ -82,7 +82,9 @@ class ComponentNode {
 
 ## To Do
 - [x] Let the component template be a HTMLElement
-- [ ] Add data & variables to templates
+- [x] Add data & variables to templates
+- [ ] Add *nymIf directives in template
+- [ ] Add *nymFor loop directives in template
 - [ ] Let the component template be a HTML File
 - [ ] Let the component stykes be a CSS File
 - [ ] Create a nym-ignore html id attribute for parts of the temlates not to be interpreted as part of the framework
