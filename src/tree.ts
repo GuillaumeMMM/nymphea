@@ -22,7 +22,7 @@ function getNodeChildren(componentId: string, componentsDocuments: {comp: Compon
     }
 
     const children: ComponentNode[] = [];
-    (componentsDocuments || []).forEach(compDoc => {
+    (componentsDocuments || []).forEach(compDoc => {
         const matchingTagElement = nodeDoc.getElementsByTagName(compDoc.comp.tag);
         if (matchingTagElement && matchingTagElement.length > 0) {
             const newParentsIds: string[] = parentsIds.concat(componentId);

@@ -9,6 +9,15 @@ const { JSDOM } = jsdom;
 const prefixer = require('postcss-prefix-selector');
 const postcss = require('postcss');
 
+/* const components: Component[] = [
+    {tag: 'my-parent', id: 'node-1', template: `<span *nymEach="array" class="{{.name}}">Array elm {{.name}}</span>`, data: {array: [{name: 'name 1'}, {name: 'name 2'}]}},
+];
+
+const html = generateHTML(components, 'my-parent');
+//  Returns a string of all the HTML with registered components repalced with their HTML content
+
+console.log(html); */
+
 function generateHTML(components: Component[], rootComponentTag: string): string {
 
     const cleanedCompoents: Component[] = componentModule.cleanComponents(components);
@@ -80,7 +89,7 @@ function insertRootComponent(document: Document, rootElement: HTMLElement, rootC
         rootComponentElm.appendChild(rootComponent.template);
     }
 
-    rootComponentElm = dataModule.insertData(rootComponentElm, rootComponent);
+    rootComponentElm = dataModule.insertData(rootComponentElm, rootComponent.data, document);
 
     //  Insert container in root
     newRootElement?.appendChild(rootComponentElm);
@@ -99,7 +108,7 @@ function insertChildren(document: Document, rootElement: HTMLElement, node: Comp
         componentElm.classList.add(`nym-component-${node.componentId}`);
 
         if (typeof matchingComp.template === 'string') {
-            componentElm.innerHTML = matchingComp.template || '';
+            componentElm.innerHTML = matchingComp.template || '';
         } else {
             componentElm.appendChild(matchingComp.template);
         }
