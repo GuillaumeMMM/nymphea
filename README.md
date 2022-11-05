@@ -65,16 +65,16 @@ console.log(tree);
 } */
 ```
 
-## Models
+## Types
 ```javascript
-class Component {
+type Component = {
     id: string;
     tag: string;
     template: string | HTMLElement;
     styles?: string;
 }
 
-class ComponentNode {
+type ComponentNode = {
     componentId: string;
     children: ComponentNode[];
 }

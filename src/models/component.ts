@@ -1,16 +1,16 @@
-export class Component {
-    id: string = '';
-    tag: string = '';
-    template: string | HTMLElement = '';
+export type Component = {
+    id: string;
+    tag: string;
+    template: string | HTMLElement;
     styles?: string;
     data?: ComponentData;
 }
 
-export class ComponentNode {
-    componentId: string = '';
-    children: ComponentNode[] = [];
+export type ComponentNode = {
+    componentId: string;
+    children: ComponentNode[];
 }
 
-export class ComponentData {
+export type ComponentData = {
     [key: string]: any
 }
